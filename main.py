@@ -1,7 +1,51 @@
 from enum import Enum
 import gymnasium as gym
 import numpy as np
+from nField import NField
 
+nf = NField()
+nf.reset(True)
+done = True
+counter = 0
+nextCall = "set"
+#array([26, 10, 17, 25, 18, 34, 35, 27, 36,  0, 36])
+#[0, np.int64(1), np.int64(2), np.int64(4), np.int64(6), np.int64(8), np.int64(5), np.int64(7), np.int64(3), np.int64(3), np.int64(0), np.int64(9), np.int64(5), np.int64(6), np.int64(9), np.int64(7), np.int64(2), np.int64(0), np.int64(3), np.int64(4), np.int64(0), np.int64(2), np.int64(6), np.int64(9), np.int64(7), np.int64(5), np.int64(3), np.int64(5), np.int64(4), np.int64(2), np.int64(0), np.int64(6), np.int64(9), np.int64(4), np.int64(7), np.int64(8)]
+#[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 10, 0, 0, 0, 0, 0, 0, 0, 0, 2], [1, 10, 19, 0, 0, 0, 0, 0, 0, 0, 3], [1, 10, 19, 0, 28, 0, 0, 0, 0, 0, 4], [1, 10, 19, 0, 28, 0, 2, 0, 0, 0, 5], [1, 10, 19, 0, 28, 0, 2, 0, 11, 0, 6], [1, 10, 19, 0, 28, 20, 2, 0, 11, 0, 7], [1, 10, 19, 0, 28, 20, 2, 29, 11, 0, 8], [1, 10, 19, 3, 28, 20, 2, 29, 11, 0, 9], [0, 10, 19, 12, 28, 20, 0, 29, 11, 0, 10], [21, 10, 19, 12, 28, 20, 0, 29, 11, 0, 11], [0, 10, 0, 12, 28, 0, 0, 29, 11, 30, 12], [0, 10, 0, 12, 0, 4, 0, 0, 11, 0, 13], [0, 10, 0, 12, 0, 4, 13, 0, 11, 0, 14], [0, 10, 0, 12, 0, 4, 13, 0, 11, 22, 15], array([ 0, 10,  0, 12,  0,  4, 13, 31, 11, 22, 16]), array([ 0, 10,  5, 12,  0,  4, 13, 31, 11, 22, 17]), array([14, 10,  5, 12,  0,  4, 13, 31, 11, 22, 18]), array([ 0, 10,  5, 23,  0,  4,  0, 31, 11, 22, 19]), array([ 0, 10,  5, 23, 32,  4,  0, 31, 11, 22, 20]), array([ 6, 10,  5, 23, 32,  4,  0, 31, 11, 22, 21]), array([ 0, 10, 15, 23, 32,  0,  0, 31, 11, 22, 22]), array([ 0, 10, 15, 23, 32,  0, 24, 31, 11, 22, 23]), array([ 0, 10, 15,  0, 32,  0,  0, 31, 11, 33, 24]), array([ 0, 10, 15,  0,  0,  0,  0,  7, 11,  0, 25]), array([ 0, 10, 15,  0,  0, 16,  0,  7, 11,  0, 26]), array([ 0, 10,  0, 25,  0,  0,  0,  7,  0,  0, 27]), array([ 0, 10,  0, 25,  0, 34,  0,  7,  0,  0, 28]), array([ 0, 10,  0, 25,  8, 34,  0,  7,  0,  0, 29]), array([ 0, 10, 17, 25,  8, 34,  0,  7,  0,  0, 30]), array([26, 10, 17, 25,  8, 34,  0,  7,  0,  0, 31]), array([26, 10, 17, 25,  8, 34, 35,  7,  0,  0, 32]), array([26, 10, 17, 25,  8, 34, 35,  7,  0,  9, 33]), array([26, 10, 17, 25, 18, 34, 35,  0,  0,  0, 34]), array([26, 10, 17, 25, 18, 34, 35, 27,  0,  0, 35]), array([26, 10, 17, 25, 18, 34, 35, 27, 36,  0, 36])]
+
+
+# лучший результат - осталось 3 карты
+[0, np.int64(1), np.int64(2), np.int64(4), np.int64(6), np.int64(8), np.int64(5), np.int64(7), np.int64(3), np.int64(3), np.int64(0), np.int64(9), np.int64(2), np.int64(6), np.int64(9), np.int64(4), np.int64(5), np.int64(0), np.int64(3), np.int64(7), np.int64(0), np.int64(2), np.int64(6), np.int64(3), np.int64(0), np.int64(5), np.int64(8), np.int64(9), np.int64(2), np.int64(4), np.int64(9), np.int64(6), np.int64(5), np.int64(7), np.int64(1), np.int64(0)]
+while done:
+        counter += 1
+
+        if counter == 990:
+            done = True
+        if(nf.observation_space[0] == 0):
+            done = True
+        if(len(nf.states) == 10):
+            done = True
+        if(np.where(nf.observation_space == 2)[0].size == 2):
+            done = True
+        if(nf.maxStep == 36):
+            done = True
+        if np.array_equal([0, np.int64(1), np.int64(2), np.int64(4), np.int64(6), np.int64(8), np.int64(5), np.int64(9), np.int64(3), np.int64(3), np.int64(0), np.int64(7), np.int64(2), np.int64(6), np.int64(9), np.int64(4), np.int64(5), np.int64(0), np.int64(3), np.int64(7), np.int64(0), np.int64(5), np.int64(6), np.int64(3), np.int64(0), np.int64(2), np.int64(2), np.int64(9), np.int64(4), np.int64(5), np.int64(7)],#, np.int64(7), np.int64(0), np.int64(2), np.int64(3), np.int64(9)],
+                          nf.actions):
+            done = True
+
+
+        if nextCall == "set":
+            if nf.setNextCard():
+                nextCall = "set"
+            else : 
+                nextCall = "rollback"
+        elif nextCall == "rollback":
+            if nf.rollback():
+                nextCall = "replace"
+            else: done = True
+        elif nextCall == "replace":
+            if nf.replace():
+                nextCall = "set" 
+            else : nextCall = "rollback"
 
 class GridWorldEnv(gym.Env):
 
@@ -21,13 +65,32 @@ class GridWorldEnv(gym.Env):
 
         # набор карт в колоде
         self.cardSet = []
-        for i in range(0,27):
-            if i%3 == 0:
+
+        for i in range(4):
+            self.cardSet.append(i*2+1)
+            self.cardSet.append(i*2+2)
+            self.cardSet.append(i*2+1+9)
+            self.cardSet.append(i*2+2+9)
+            self.cardSet.append(i*2+1+18)
+            self.cardSet.append(i*2+2+18)
+            self.cardSet.append(i*2+1+27)
+            self.cardSet.append(i*2+2+27)
+
+        self.cardSet.append(9)
+        self.cardSet.append(18)
+        self.cardSet.append(27)
+        self.cardSet.append(36)
+        
+        return
+        for i in range(0,36):
+            if i%4 == 0:
                 cardSuit = 0
-            elif i%3 == 1:
+            elif i%4 == 1:
                 cardSuit = 1
-            else: cardSuit = 2
-            cardVal = i//3 +1
+            elif i%4 == 2:
+                cardSuit = 2
+            else: cardSuit = 3
+            cardVal = i//4 +1
             self.cardSet.append(cardSuit*9 + cardVal)
 
     def reset(self, seed=None, options=None):
@@ -494,7 +557,7 @@ class GridWorldEnv(gym.Env):
     def setNextCard(self) -> bool:
         self.addCard()
 
-        if self.observation_space[9] == 27:
+        if self.observation_space[9] == 36:
             zeroIndArr = np.where(self.observation_space == 0)[0]
             if zeroIndArr.size == 9: 
                 return False
@@ -504,7 +567,6 @@ class GridWorldEnv(gym.Env):
             indOfZero = np.where(self.observation_space == 0)
             if indOfZero[0].size == 9:
                 return False
-        
         #self.observation_space = np.array([ 0, 22, 15,  8, 26,  0,  7, 14,  0, 24])
         # ищем свободное место                                                                                                                                                                                                                                                                                                                                                                                                                                              
         zeroIndArr = np.where(self.observation_space == 0)[0]
@@ -512,7 +574,7 @@ class GridWorldEnv(gym.Env):
                 self.directTray = True
         
         if zeroIndArr.size == 0: return False
-        if self.observation_space[9] == 27: return False
+        if self.observation_space[9] == 36: return False
         card = self.cardSet[self.observation_space[9]]
         
         zeroInd = zeroIndArr[0]
@@ -610,7 +672,9 @@ class GridWorldEnv(gym.Env):
             return 0
         elif (numOfCard - 1)//9 == 1:
             return 1
-        return 2
+        elif (numOfCard - 1)//9 == 2:
+            return 2
+        return 3
     
     def checkActionsSample(self, actions):
         
@@ -662,7 +726,7 @@ for episode in range(1, episodes+1):
         #     print("18")
         # фото для акшн = 20
         # после коунтер 97
-        if counter == 97:
+        if counter == 17:
                     minRBack = len(myGWE.actions)
 
         zeroIndArr = np.where(myGWE.observation_space == 0)[0]
